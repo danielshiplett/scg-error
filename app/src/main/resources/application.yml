@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: app
+  output:
+    ansi:
+      enabled: always
+
+server:
+  port: 8081
+  http2:
+    enabled: true

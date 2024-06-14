@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: gateway
+  output:
+    ansi:
+      enabled: always
+
+  cloud:
+    gateway:
+      filter:
+        local-response-cache:
+          enabled: true
+      routes:
+        - id: app
+          uri: "http://localhost:8081"
+          predicates:
+            - Path=/app/**,false
+          filters:
+            - RewritePath=/app(?<segment>/?.*), $\{segment}
+            - name: LocalResponseCache
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: INFO
+    org.springframework.web.reactive: INFO
+    reactor.netty: INFO
